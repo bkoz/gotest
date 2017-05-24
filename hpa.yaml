@@ -1,0 +1,22 @@
+apiVersion: v1
+items:
+- apiVersion: autoscaling/v1
+  kind: HorizontalPodAutoscaler
+  metadata:
+    creationTimestamp: null
+    name: frontend-scaler
+  spec:
+    maxReplicas: 8
+    minReplicas: 1
+    scaleTargetRef:
+      apiVersion: v1
+      kind: DeploymentConfig
+      name: golang-sandbox
+    targetCPUUtilizationPercentage: 180
+  status:
+    currentCPUUtilizationPercentage: 0
+    currentReplicas: 2
+    desiredReplicas: 2
+    lastScaleTime: 2017-05-24T14:44:01Z
+kind: List
+metadata: {}
