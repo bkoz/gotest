@@ -11,7 +11,7 @@ items:
     scaleTargetRef:
       apiVersion: v1
       kind: DeploymentConfig
-      name: golang-sandbox
+      name: gotest
     targetCPUUtilizationPercentage: 180
   status:
     currentCPUUtilizationPercentage: 0
