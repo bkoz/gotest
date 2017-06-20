@@ -49,8 +49,8 @@ func redHandler(w http.ResponseWriter, r *http.Request) {
 
 // plotHandler - Draw the fractal image.
 func fracHandler(w http.ResponseWriter, r *http.Request) {
-	width := 64
-	height := 64
+	width := 1024
+	height := 1024
 	m := image.NewRGBA(image.Rect(0, 0, width, height))
 	mandel := createImage(width, height)
 	draw.Draw(m, m.Bounds(), mandel, image.ZP, draw.Src)
