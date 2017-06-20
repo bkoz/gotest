@@ -9,6 +9,7 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
+	"image/color/palette"
 	"image/jpeg"
 	"log"
 	"math/cmplx"
@@ -145,8 +146,8 @@ func mandelbrot(z complex128) color.Color {
 	for n := uint8(0); n < iterations; n++ {
 		v = v*v + z
 		if cmplx.Abs(v) > 2 {
-			// fmt.Print(255-contrast*n, " ")
-			return color.Gray{255 - contrast*n}
+			// return color.Gray{255 - contrast*n}
+			return palette.Plan9[255-contrast*n]
 			// return lut[255-contrast*n]
 		}
 	}
