@@ -1,5 +1,4 @@
-# gotest
-golang testing with OpenShift
+# Autoscaling go applications with OpenShift
 
 As cluster admin, add limits and quotas to the project:
 ```
@@ -18,7 +17,7 @@ oc expose svc gotest
 oc get hpa -w
 ```
 
-In a second terminal, busy up the app with requests (don't forget the trailing slash):
+In a second terminal, busy up the app with requests anmd wait for autoscaling to happen (don't forget the trailing slash):
 ```
 ab -n 1024 -c 4 http://<route>/
 ```
