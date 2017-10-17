@@ -8,8 +8,8 @@ import (
 	"html/template"
 	"image"
 	"image/color"
-	"image/draw"
 	"image/color/palette"
+	"image/draw"
 	"image/jpeg"
 	"log"
 	"math/cmplx"
@@ -62,7 +62,7 @@ func fracHandler(w http.ResponseWriter, r *http.Request) {
 
 var ImageTemplate string = `<!DOCTYPE html>
 <html lang="en"><head></head>
-<body><img src="data:image/jpg;base64,{{.Image}}"></body>`
+<body><img width=512 height=512 src="data:image/jpg;base64,{{.Image}}"></body>`
 
 // Writeimagewithtemplate encodes an image 'img' in jpeg format and writes it into ResponseWriter using a template.
 func writeImageWithTemplate(w http.ResponseWriter, img *image.Image) {
