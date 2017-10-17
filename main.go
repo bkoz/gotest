@@ -19,6 +19,7 @@ import (
 	"time"
 )
 
+var randNumber
 var root = flag.String("root", ".", "file system path")
 
 func main() {
@@ -53,6 +54,8 @@ func redHandler(w http.ResponseWriter, r *http.Request) {
 func fracHandler(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().UTC().UnixNano())
 	log.Println("fracHandler running ", rand.Intn(1000))
+	// global
+	randNumber = rand.Intn(1000)
 	width := 64
 	height := 64
 	m := image.NewRGBA(image.Rect(0, 0, width, height))
@@ -64,7 +67,7 @@ func fracHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 var ImageTemplate string = `<!DOCTYPE html>
-<html lang="en"><head><link rel="stylesheet" type="text/css" href="default.css"></head>
+<html lang="en"><head><link rel="stylesheet" type="text/css" href="main.css"></head>
 <body><h1>Jam Session @fortnebula.com</h1><img width=768 height=768 src="data:image/jpg;base64,{{.Image}}"></body>`
 
 // Writeimagewithtemplate encodes an image 'img' in jpeg format and writes it into ResponseWriter using a template.
