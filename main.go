@@ -13,8 +13,10 @@ import (
 	"image/jpeg"
 	"log"
 	"math/cmplx"
+	"math/rand"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 var root = flag.String("root", ".", "file system path")
@@ -49,7 +51,8 @@ func redHandler(w http.ResponseWriter, r *http.Request) {
 
 // plotHandler - Draw the fractal image.
 func fracHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("fracHandler running")
+	rand.Seed(time.Now().UTC().UnixNano())
+	log.Println("fracHandler running ", rand.Intn(1000))
 	width := 64
 	height := 64
 	m := image.NewRGBA(image.Rect(0, 0, width, height))
