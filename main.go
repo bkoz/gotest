@@ -61,7 +61,7 @@ func fracHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 var ImageTemplate string = `<!DOCTYPE html>
-<html lang="en"><head></head>
+<html lang="en"><head><link rel="stylesheet" type="text/css" href="default.css"></head>
 <body><h1>Jam Session @fortnebula.com</h1><img width=512 height=512 src="data:image/jpg;base64,{{.Image}}"></body>`
 
 // Writeimagewithtemplate encodes an image 'img' in jpeg format and writes it into ResponseWriter using a template.
