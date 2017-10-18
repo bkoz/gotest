@@ -19,7 +19,7 @@ import (
 	"time"
 )
 
-var randNumber = 0
+var randNumber = uint8(0)
 var root = flag.String("root", ".", "file system path")
 
 func main() {
