@@ -53,8 +53,9 @@ func redHandler(w http.ResponseWriter, r *http.Request) {
 // plotHandler - Draw the fractal image.
 func fracHandler(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().UTC().UnixNano())
-	log.Println("fracHandler running ", rand.Intn(15))
+	// Update the global variable used to control contrast.
 	randNumber = uint8(rand.Intn(15))
+	log.Println("fracHandler running, randNumber = ", randNumber)
 	width := 64
 	height := 64
 	m := image.NewRGBA(image.Rect(0, 0, width, height))
@@ -67,7 +68,7 @@ func fracHandler(w http.ResponseWriter, r *http.Request) {
 
 var ImageTemplate string = `<!DOCTYPE html>
 <html lang="en"><head><style TYPE="text/css"> h1 { font-size: xx-large; font-family: sans-serif } </style> </head>
-<body><h1>REFRESH ME for new colors!</h1><img width=768 height=768 src="data:image/jpg;base64,{{.Image}}"></body>`
+<body><h1>RELOAD ME for new colors!</h1><img width=768 height=768 src="data:image/jpg;base64,{{.Image}}"></body>`
 
 // Writeimagewithtemplate encodes an image 'img' in jpeg format and writes it into ResponseWriter using a template.
 func writeImageWithTemplate(w http.ResponseWriter, img *image.Image) {
