@@ -23,7 +23,7 @@ var randNumber = uint8(0)
 var root = flag.String("root", ".", "file system path")
 
 func main() {
-	http.HandleFunc("/", fracHandler)
+	http.HandleFunc("/mandelbrot", fracHandler)
 	// http.Handle("/", http.FileServer(http.Dir(*root)))
 	log.Println("Listening on 8080")
 	err := http.ListenAndServe(":8080", nil)
@@ -32,34 +32,20 @@ func main() {
 	}
 }
 
-func blueHandler(w http.ResponseWriter, r *http.Request) {
-	m := image.NewRGBA(image.Rect(0, 0, 240, 240))
-	blue := color.RGBA{0, 0, 255, 255}
-	draw.Draw(m, m.Bounds(), &image.Uniform{blue}, image.ZP, draw.Src)
-
-	var img image.Image = m
-	writeImage(w, &img)
-}
-
-func redHandler(w http.ResponseWriter, r *http.Request) {
-	m := image.NewRGBA(image.Rect(0, 0, 240, 240))
-	blue := color.RGBA{255, 0, 0, 255}
-	draw.Draw(m, m.Bounds(), &image.Uniform{blue}, image.ZP, draw.Src)
-
-	var img image.Image = m
-	writeImageWithTemplate(w, &img)
-}
-
 // plotHandler - Draw the fractal image.
 func fracHandler(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().UTC().UnixNano())
 	// Update the global variable used to control contrast.
 	randNumber = uint8(rand.Intn(15))
 	log.Println("fracHandler running, randNumber = ", randNumber)
-	width := 64
-	height := 64
+	width := 256
+	height := 256
 	m := image.NewRGBA(image.Rect(0, 0, width, height))
+	log.Println("fracHandler: createImage started.")
+
 	mandel := createImage(width, height)
+	log.Println("fracHandler: createImage finished.")
+
 	draw.Draw(m, m.Bounds(), mandel, image.ZP, draw.Src)
 
 	var img image.Image = m
@@ -68,7 +54,7 @@ func fracHandler(w http.ResponseWriter, r *http.Request) {
 
 var ImageTemplate string = `<!DOCTYPE html>
 <html lang="en"><head><style TYPE="text/css"> h1 { font-size: xx-large; font-family: sans-serif } </style> </head>
-<body><h1>RELOAD ME for new colors!</h1><img width=768 height=768 src="data:image/jpg;base64,{{.Image}}"></body>`
+<body><h1></h1><img src="data:image/jpg;base64,{{.Image}}"></body>`
 
 // Writeimagewithtemplate encodes an image 'img' in jpeg format and writes it into ResponseWriter using a template.
 func writeImageWithTemplate(w http.ResponseWriter, img *image.Image) {
