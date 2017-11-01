@@ -1,4 +1,10 @@
-// Main - Taken from https://gist.githubusercontent.com/santiaago/d6d681d14c5f3b3f5d69/raw/b9cae0c3d0e10cb91e8a47a0d4e8420fb3a05c31/main.go
+//
+// Multi-threaded mandelbrot microservice.
+// Author: Bob Kozdemba (bkozdemba@gmail.com)
+//
+// Testing: ab -n 2000 -c8 http://localhost:8080/mandelbrot
+//
+// Ideas borrowed from from https://gist.githubusercontent.com/santiaago/d6d681d14c5f3b3f5d69/raw/b9cae0c3d0e10cb91e8a47a0d4e8420fb3a05c31/main.go
 package main
 
 import (
@@ -19,11 +25,11 @@ import (
 	"time"
 )
 
-var randNumber = uint8(0)
+// var randNumber = uint8(0)
 var root = flag.String("root", ".", "file system path")
 
 func main() {
-	http.HandleFunc("/mandelbrot", fracHandler)
+	go http.HandleFunc("/mandelbrot", fracHandler)
 	// http.Handle("/", http.FileServer(http.Dir(*root)))
 	log.Println("Listening on 8080")
 	err := http.ListenAndServe(":8080", nil)
@@ -36,15 +42,18 @@ func main() {
 func fracHandler(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().UTC().UnixNano())
 	// Update the global variable used to control contrast.
-	randNumber = uint8(rand.Intn(15))
-	log.Println("fracHandler running, randNumber = ", randNumber)
-	width := 256
-	height := 256
+	//randNumber = uint8(rand.Intn(15))
+	//log.Println("fracHandler running, randNumber = ", randNumber)
+	width := 1024
+	height := 1024
 	m := image.NewRGBA(image.Rect(0, 0, width, height))
-	log.Println("fracHandler: createImage started.")
 
+	log.Println("fracHandler: createImage started.")
+	start := time.Now()
 	mandel := createImage(width, height)
-	log.Println("fracHandler: createImage finished.")
+	t := time.Now()
+	elapsed := t.Sub(start)
+	log.Println("fracHandler: createImage finished, elasped time = ", elapsed)
 
 	draw.Draw(m, m.Bounds(), mandel, image.ZP, draw.Src)
 
@@ -102,6 +111,10 @@ func createImage(width int, height int) image.Image {
 		xmin, ymin, xmax, ymax = -2, -2, +2, +2
 	)
 
+	var c uint8
+	c = uint8(rand.Intn(15))
+	log.Println("createImage: contrast = ", c)
+
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for py := 0; py < height; py++ {
 		y := float64(py)/float64(height)*(ymax-ymin) + ymin
@@ -109,7 +122,7 @@ func createImage(width int, height int) image.Image {
 			x := float64(px)/float64(width)*(xmax-xmin) + xmin
 			z := complex(x, y)
 			// Image point (px, py) represents complex value z.
-			img.Set(px, py, mandelbrot(z))
+			img.Set(px, py, mandelbrot(z, c))
 		}
 	}
 	// png.Encode(os.Stdout, img) // NOTE: ignoring errors
@@ -119,29 +132,15 @@ func createImage(width int, height int) image.Image {
 // mandelbrot - Compute and return the pixel.
 //              Implement color LUT using a go map type - key is based on 'n'?
 
-func mandelbrot(z complex128) color.Color {
+func mandelbrot(z complex128, contrast uint8) color.Color {
 	const iterations = 200
-	const contrast = 15
-
 	var v complex128
-
-	lut := make(map[uint8]color.Color)
-
-	for i := 0; i < 256; i++ {
-		if i < 100 {
-			lut[uint8(i)] = color.RGBA{255, 0, 0, 255}
-		} else {
-			lut[uint8(i)] = color.RGBA{255, 255, 0, 255}
-
-		}
-	}
 
 	for n := uint8(0); n < iterations; n++ {
 		v = v*v + z
 		if cmplx.Abs(v) > 2 {
 			// return color.Gray{255 - contrast*n}
-			return palette.Plan9[255-randNumber*n]
-			// return lut[255-contrast*n]
+			return palette.Plan9[255-contrast*n]
 		}
 	}
 	return color.Black
