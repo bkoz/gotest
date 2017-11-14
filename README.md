@@ -12,14 +12,14 @@ oc new-app docker.io/jorgemoralespou/s2i-go~https://github.com/bkoz/gotest.git
 
 oc create -f hpa.yaml
 
-oc expose svc gotest
+oc expose svc gotest --path=/mandelbrot
 
 oc get hpa -w
 ```
 
 In a second terminal, busy up the app with requests anmd wait for autoscaling to happen (don't forget the trailing slash):
 ```
-ab -n 1024 -c 4 http://<route>/
+ab -n 20000 -c 16 http://<route>/
 ```
 
 

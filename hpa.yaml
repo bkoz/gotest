@@ -12,11 +12,4 @@ items:
       apiVersion: v1
       kind: DeploymentConfig
       name: gotest
-    targetCPUUtilizationPercentage: 70
-  status:
-    currentCPUUtilizationPercentage: 0
-    currentReplicas: 2
-    desiredReplicas: 2
-    lastScaleTime: 2017-05-24T14:44:01Z
-kind: List
-metadata: {}
+    targetCPUUtilizationPercentage: 40
