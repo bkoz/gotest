@@ -6,7 +6,7 @@ oc create -f limits.json
 oc create -f resource-quotas.yaml
 ```
 
-As a regular user, create the app:
+As a regular user, create the application, route and autoscaler objects.
 ```
 oc new-app docker.io/jorgemoralespou/s2i-go~https://github.com/bkoz/gotest.git
 

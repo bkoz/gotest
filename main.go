@@ -44,8 +44,8 @@ func fracHandler(w http.ResponseWriter, r *http.Request) {
 	// Update the global variable used to control contrast.
 	//randNumber = uint8(rand.Intn(15))
 	//log.Println("fracHandler running, randNumber = ", randNumber)
-	width := 1024
-	height := 1024
+	width := 768
+	height := 768
 	m := image.NewRGBA(image.Rect(0, 0, width, height))
 
 	log.Println("fracHandler: createImage started.")
