@@ -6,13 +6,15 @@ oc create -f limits.json
 oc create -f resource-quotas.yaml
 ```
 
-As a regular user, create the application, route and autoscaler objects.
+As a regular user, create the application.
 ```
 oc new-app docker.io/jorgemoralespou/s2i-go~https://github.com/bkoz/gotest.git
 
-oc create -f hpa.yaml
-
 oc expose svc gotest --path=/mandelbrot
+```
+Confirm the app is working then create an hpa object.
+```
+oc autoscale dc/gotest --min 1 --max 10 --cpu-percent=40
 
 oc get hpa -w
 ```
