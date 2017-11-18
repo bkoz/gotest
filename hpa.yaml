@@ -5,7 +5,7 @@ metadata:
 spec:
   scaleRef:
     kind: DeploymentConfig 
-    name: hpa
+    name: gotest
     apiVersion: v1 
     subresource: scale
   minReplicas: 1 
