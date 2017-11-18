@@ -14,7 +14,7 @@ oc expose svc gotest --path=/mandelbrot
 ```
 Confirm the app is working then create an hpa object.
 ```
-oc autoscale dc/gotest --min 1 --max 10 --cpu-percent=40
+oc create -f hpa.yaml
 
 oc get hpa -w
 ```
