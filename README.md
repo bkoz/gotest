@@ -19,7 +19,7 @@ oc autoscale dc gotest --max=4 --min=1 --cpu-percent=40
 oc get hpa -w
 ```
 
-In a second terminal, busy up the app with requests anmd wait for autoscaling to happen (don't forget the trailing slash):
+Open a second terminal window, busy up the app with requests and wait for autoscaling to happen (don't forget the trailing slash):
 ```
 ab -n 20000 -c 16 http://<route>/mandelbrot/
 ```
