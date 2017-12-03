@@ -21,7 +21,7 @@ oc get hpa -w
 
 Open a second terminal window, busy up the app with requests and wait for autoscaling to happen (don't forget the trailing slash):
 ```
-ab -n 20000 -c 16 http://<route>/mandelbrot/
+ab -n 100000 -c 4 http://<route>/mandelbrot/
 ```
 
 
