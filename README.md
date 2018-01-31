@@ -24,6 +24,6 @@ Open a second terminal window, busy up the app with requests and wait for autosc
 ab -n 100000 -c 4 http://<route>/mandelbrot/
 ```
 
-![Mandelbrot Plot](mandelbrot.jpg Mandelbrot Plot)
+![Mandelbrot Plot](https://raw.githubusercontent.com/bkoz/gotest/master/mandelbrot.jpg Mandelbrot Plot)
 
 
