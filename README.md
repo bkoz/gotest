@@ -2,8 +2,8 @@
 
 As cluster admin, add limits and quotas to the project:
 ```
-oc create -f limits.json  
-oc create -f resource-quotas.yaml
+oc create -f limits.json -n <project>
+oc create -f resource-quotas.yaml -n <project>
 ```
 
 As a regular user, create the application.
@@ -23,5 +23,7 @@ Open a second terminal window, busy up the app with requests and wait for autosc
 ```
 ab -n 100000 -c 4 http://<route>/mandelbrot/
 ```
+
+![Mandelbrot Plot](mandelbrot.jpg Mandelbrot Plot)
 
 
