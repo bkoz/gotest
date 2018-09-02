@@ -31,8 +31,9 @@ var root = flag.String("root", ".", "file system path")
 func main() {
 	go http.HandleFunc("/mandelbrot", fracHandler)
 	// http.Handle("/", http.FileServer(http.Dir(*root)))
-	log.Println("Listening on 8080")
-	err := http.ListenAndServe(":8080", nil)
+        var port string = ":9001"
+	log.Println("Listening on port" + port)
+	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
