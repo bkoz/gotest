@@ -29,9 +29,9 @@ import (
 var root = flag.String("root", ".", "file system path")
 
 func main() {
-	go http.HandleFunc("/mandelbrot", fracHandler)
+	go http.HandleFunc("/", fracHandler)
 	// http.Handle("/", http.FileServer(http.Dir(*root)))
-        var port string = ":9001"
+        var port string = ":8080"
 	log.Println("Listening on port" + port)
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
