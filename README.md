@@ -10,7 +10,7 @@ As a regular user, create the application.
 ```
 oc new-app docker.io/jorgemoralespou/s2i-go~https://github.com/bkoz/gotest.git
 
-oc expose svc gotest --path=/mandelbrot
+oc expose svc gotest
 ```
 Confirm the app is working then create an hpa object.
 ```
@@ -21,7 +21,7 @@ oc get hpa -w
 
 Open a second terminal window, busy up the app with requests and wait for autoscaling to happen (don't forget the trailing slash):
 ```
-ab -n 100000 -c 4 http://<route>/mandelbrot/
+ab -n 100000 -c 4 http://<route>/
 ```
 
 ![Mandelbrot Plot](https://raw.githubusercontent.com/bkoz/gotest/master/mandelbrot.jpg)
